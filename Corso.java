@@ -22,6 +22,9 @@ public class Corso implements Serializable {
         return istruttore;
     }
 
+    public void addIscritto(){
+
+    }
     @Override
     public String toString() {
         String output="Corso{" +
