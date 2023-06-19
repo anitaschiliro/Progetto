@@ -1,11 +1,11 @@
 import java.io.Serializable;
 
-public class Person implements Serializable {
+public class Iscritto implements Serializable {
     private String name;
     private String surname;
     private int age;
 
-    public Person(String name, String surname, int age) {
+    public Iscritto(String name, String surname, int age) {
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -37,10 +37,11 @@ public class Person implements Serializable {
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "Iscritto{" +
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", age=" + age +
                 '}';
     }
 }
+
