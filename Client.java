@@ -32,8 +32,8 @@ public class Client {
                 System.out.println("------------------------");
                 System.out.println("1 - Aggiungi corso");
                 System.out.println("2 - Mostra corsi");
-                System.out.println("3 - Salva lista corsi");
-                System.out.println("4 - Carica lista corsi");
+                System.out.println("3 - Salva liste corsi e iscritti");
+                System.out.println("4 - Carica liste corsi e iscritti");
                 System.out.println("5 - Aggiungi iscritto");
                 System.out.println("6 - Esci");
                 System.out.println("-------------------------");
@@ -59,7 +59,78 @@ public class Client {
                         pw.println("END_CMD");
                         pw.flush();
                         break;
+                    case "2":
+                        pw.println("MOSTRA_CORSI");
+                        pw.flush();
+                        boolean continue_list=true;
+                        System.out.println("-----------------------");
+                        System.out.println("Lista dei corsi");
+                        System.out.println("-----------------------");
+                        while(continue_list){
+                            String line=sc.nextLine();
+                            if(line.equals("END_DATA"))
+                                continue_list=false;
+                            else{
+                                System.out.println(line);
+                                System.out.println("------------------------");
+                            }
 
+                        }
+                        System.out.println("*************************");
+                        pw.println("END_CMD");
+                        pw.flush();
+                        break;
+                    case "3"://salva sia corsi che iscritti
+                        System.out.println("In che file vuoi salvare i corsi? ");
+                        var nome1 = input.nextLine();
+                        System.out.println("In che file vuoi salvare gli iscritti? ");
+                        var nome2 = input.nextLine();
+                        pw.println("SALVA_CORSI_ISCRITTI");
+                        pw.flush();
+                        pw.println(nome1);
+                        pw.flush();
+                        pw.println(nome2);
+                        pw.flush();
+                        pw.println("END_CMD");
+                        break;
+
+                    case "4":
+                        System.out.println("Inserisci file corsi: ");
+                        nome1 = input.nextLine();
+                        System.out.println("Inserisci file iscritti: ");
+                        nome2= input.nextLine();
+                        pw.println("LOAD_CORSI_ISCRITTI");
+                        pw.flush();
+                        pw.println(nome1);
+                        pw.flush();
+                        pw.println(nome2);
+                        pw.flush();
+                        pw.println("END_CMD");
+                        break;
+                    case "5":
+                        System.out.print("Inserisci nome: ");
+                        nome = input.nextLine();
+                        System.out.print("Inserisci cognome: ");
+                        var cognome = input.nextLine();
+                        System.out.println("Inserisci età: ");
+                        var eta= input.nextLine();
+                        System.out.println("Inserisci corso: ");
+                        var corso=input.nextLine();
+
+                        pw.println("ADD_ISCRITTO");
+                        pw.flush();
+                        pw.println(nome);
+                        pw.flush();
+                        pw.println(cognome);
+                        pw.flush();
+                        pw.println(eta);
+                        pw.flush();
+                        pw.println(corso);
+                        pw.flush();
+
+                        pw.println("END_CMD");
+                        pw.flush();
+                        break;
                     case "6":
                         pw.println("CMD_QUIT");
                         pw.flush();

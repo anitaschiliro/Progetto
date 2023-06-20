@@ -42,12 +42,66 @@ public class ClientManager implements Runnable{
 
                         break;
 
+                    case "LOAD_CORSI_ISCRITTI":
+                        System.out.println("Caricamento corsi...");
+                        var corsi=sc.nextLine();
+
+                        System.out.println("Caricamento iscritti...");
+                        var iscritti=sc.nextLine();
+
+                        end_cmd= sc.nextLine();
+                        if(!end_cmd.equals("END_CMD")){
+                            System.out.println("Format error");
+                        }
+                        my_server.commandLoadListCorsi(corsi,iscritti);//synchronized
+                        break;
+                    case "MOSTRA_CORSI":
+
+                        for(String s: my_server.getListString()){
+                            pw.println(s);
+                            pw.flush();
+                        }
+
+                        pw.println("END_DATA");
+                        pw.flush();
+                        end_cmd= sc.nextLine();
+                        if(!end_cmd.equals("END_CMD")){
+                            System.out.println("Format error");
+                        }
+                        break;
+                    case "SALVA_CORSI_ISCRITTI":
+                        System.out.println("Salvo la lista dei corsi..");
+                        corsi=sc.nextLine();
+                        System.out.println("Salvo la lista degli iscritti..");
+                        iscritti=sc.nextLine();
+                        my_server.commandSaveList(corsi,iscritti);
+                        end_cmd= sc.nextLine();
+                        if(!end_cmd.equals("END_CMD")){
+                            System.out.println("Format error");
+                        }
+                        break;
+                    case "ADD_ISCRITTO":
+
+                        nome = sc.nextLine();
+                        var cognome = sc.nextLine();
+                        var eta= Integer.parseInt(sc.nextLine());
+                        String nome_corso= sc.nextLine();
+
+                        end_cmd= sc.nextLine();
+                        if(!end_cmd.equals("END_CMD")){
+                            System.out.println("Format error");
+                        }
+                        System.out.println("Aggiungo iscritto: "+nome + " "+ cognome+" "+eta+" "+nome_corso);
+                        var iscritto = new Iscritto(nome,cognome,eta,nome_corso);
+                        my_server.commandAddIscritto(iscritto);
+
+                        break;
                     case "CMD_QUIT":
-                        System.out.println("Closing connection...");
+                        System.out.println("Chiudo la connessione...");
                         break;
                     default:
                         if(!cmd.isBlank())
-                            System.out.println("Unknown command");
+                            System.out.println("Comando sconosciuto!");
                         break;
                 }
             }

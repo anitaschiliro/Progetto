@@ -4,15 +4,20 @@ public class Iscritto implements Serializable {
     private String name;
     private String surname;
     private int age;
-
-    public Iscritto(String name, String surname, int age) {
+    private String corso;
+    public Iscritto(String name, String surname, int age,String corso) {
         this.name = name;
         this.surname = surname;
         this.age = age;
+        this.corso=corso;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getCorso() {
+        return corso;
     }
 
     public void setName(String name) {

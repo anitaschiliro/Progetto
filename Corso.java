@@ -22,8 +22,13 @@ public class Corso implements Serializable {
         return istruttore;
     }
 
-    public void addIscritto(){
+    public void addIscritto(Iscritto i){
+        ListaIscritti.add(i);
+    }
 
+    public LinkedList<Iscritto> getListaIscritti(){
+        var list_copy = new LinkedList<Iscritto>(ListaIscritti);
+        return list_copy;
     }
     @Override
     public String toString() {
