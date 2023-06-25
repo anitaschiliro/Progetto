@@ -35,7 +35,10 @@ public class Client {
                 System.out.println("3 - Salva liste corsi e iscritti");
                 System.out.println("4 - Carica liste corsi e iscritti");
                 System.out.println("5 - Aggiungi iscritto");
-                System.out.println("6 - Esci");
+                System.out.println("6 - Aggiungi prenotazione");
+                System.out.println("7 - Mostra calendario prenotazioni");
+                System.out.println("8 - Mostra lista debitori");
+                System.out.println("9 - Esci");
                 System.out.println("-------------------------");
                 System.out.println("Inserisci la tua scelta: ");
 
@@ -47,13 +50,15 @@ public class Client {
                         var nome = input.nextLine();
                         System.out.print("Inserisci nome istruttore: ");
                         var istruttore = input.nextLine();
-
+                        System.out.print("Inserisci costo: ");
+                        var costo = input.nextLine();
                         pw.println("ADD_CORSO");
                         pw.flush();
                         pw.println(nome);
                         pw.flush();
                         pw.println(istruttore);
-
+                        pw.flush();
+                        pw.println(costo);
                         pw.flush();
 
                         pw.println("END_CMD");
@@ -132,6 +137,78 @@ public class Client {
                         pw.flush();
                         break;
                     case "6":
+                        System.out.print("Inserisci nome: ");
+                        nome = input.nextLine();
+                        System.out.print("Inserisci cognome: ");
+                        cognome = input.nextLine();
+                        System.out.println("Inserisci corso: ");
+                        corso=input.nextLine();
+                        System.out.println("Inserisci data (AAAA-MM-DD): ");
+                        var data = input.nextLine();
+                        System.out.println("Inserisci ora (OO:MM):");
+                        var ora = input.nextLine();
+                        pw.println("ADD_PRENOTAZIONE");
+                        pw.flush();
+                        pw.println(nome);
+                        pw.flush();
+                        pw.println(cognome);
+                        pw.flush();
+                        pw.println(corso);
+                        pw.flush();
+                        pw.println(data);
+                        pw.flush();
+                        pw.println(ora);
+                        pw.flush();
+                        pw.println("END_CMD");
+                        pw.flush();
+                        break;
+                    case "7":
+                        System.out.println("Inserisci corso: ");
+                        corso= input.nextLine();
+                        pw.println(corso);
+                        pw.flush();
+                        pw.println("MOSTRA_CALENDARIO");
+                        pw.flush();
+                        continue_list=true;
+                        System.out.println("-----------------------");
+                        System.out.println("Calendario prenotazioni");
+                        System.out.println("-----------------------");
+                        while(continue_list){
+                            String line=sc.nextLine();
+                            if(line.equals("END_DATA"))
+                                continue_list=false;
+                            else{
+                                System.out.println(line);
+                                System.out.println("------------------------");
+                            }
+
+                        }
+                        System.out.println("*************************");
+                        pw.println("END_CMD");
+                        pw.flush();
+                        break;
+                    case "8":
+                        pw.println("MOSTRA_DEBITORI");
+                        pw.flush();
+                        continue_list=true;
+                        System.out.println("-----------------------");
+                        System.out.println("Lista debitori");
+                        System.out.println("-----------------------");
+                        while(continue_list){
+                            String line=sc.nextLine();
+                            if(line.equals("END_DATA"))
+                                continue_list=false;
+                            else{
+                                System.out.println(line);
+                                System.out.println("------------------------");
+                            }
+
+                        }
+                        System.out.println("*************************");
+                        pw.println("END_CMD");
+                        pw.flush();
+                        break;
+                    case "9":
                         pw.println("CMD_QUIT");
                         pw.flush();
                         System.out.println("Uscita..");

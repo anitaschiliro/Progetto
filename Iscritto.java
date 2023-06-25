@@ -5,11 +5,23 @@ public class Iscritto implements Serializable {
     private String surname;
     private int age;
     private String corso;
+
+    private boolean pagamento;
+
     public Iscritto(String name, String surname, int age,String corso) {
         this.name = name;
         this.surname = surname;
         this.age = age;
         this.corso=corso;
+        this.pagamento=true;
+    }
+
+    public boolean isPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(boolean pagamento) {
+        this.pagamento = pagamento;
     }
 
     public String getName() {

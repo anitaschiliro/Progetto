@@ -1,7 +1,9 @@
 import java.io.*;
 import java.net.Socket;
+import java.time.LocalDateTime;
 import java.util.Scanner;
-
+import java.util.HashMap;
+import java.util.Map;
 public class ClientManager implements Runnable{
     Socket client;
     Server my_server;
@@ -31,13 +33,13 @@ public class ClientManager implements Runnable{
 
                         var nome = sc.nextLine();
                         var istruttore = sc.nextLine();
-
+                        var costo= Float.parseFloat(sc.nextLine());
                         var end_cmd= sc.nextLine();
                         if(!end_cmd.equals("END_CMD")){
                             System.out.println("Format error");
                         }
-                        System.out.println("Aggiungo corso: "+nome + " "+ istruttore);
-                        var corso = new Corso(nome,istruttore);
+                        System.out.println("Aggiungo corso: "+nome + " "+ istruttore+" "+costo);
+                        var corso = new Corso(nome,istruttore,costo);
                         my_server.commandAddCorso(corso);
 
                         break;
@@ -57,8 +59,8 @@ public class ClientManager implements Runnable{
                         break;
                     case "MOSTRA_CORSI":
 
-                        for(String s: my_server.getListString()){
-                            pw.println(s);
+                        for(Corso c: my_server.getListaCorsi()){
+                            pw.println(c.toString());
                             pw.flush();
                         }
 
@@ -95,6 +97,45 @@ public class ClientManager implements Runnable{
                         var iscritto = new Iscritto(nome,cognome,eta,nome_corso);
                         my_server.commandAddIscritto(iscritto);
 
+                        break;
+                    case "ADD_PRENOTAZIONE":
+                        nome=sc.nextLine();
+                        cognome=sc.nextLine();
+                        var c =sc.nextLine();
+                        var data =sc.nextLine();
+                        var ora= sc.nextLine();
+                        end_cmd= sc.nextLine();
+                        if(!end_cmd.equals("END_CMD")){
+                            System.out.println("Format error");
+                        }
+                        System.out.println("Aggiungo prenotazione...");
+                        my_server.commandAddPrenotazione(nome,cognome,c,data,ora);
+                        break;
+                    case "MOSTRA_CALENDARIO":
+                        nome_corso=sc.nextLine();
+                        for (Map.Entry<LocalDateTime,Prenotazioni> entry : my_server.getCalendario(nome_corso).entrySet()) {
+                            pw.println(entry.getKey() + ": \n\t" + entry.getValue());
+                            pw.flush();
+                        }
+
+                        pw.println("END_DATA");
+                        pw.flush();
+                        end_cmd= sc.nextLine();
+                        if(!end_cmd.equals("END_CMD")){
+                            System.out.println("Format error");
+                        }
+                        break;
+                    case "MOSTRA_DEBITORI":
+                        for(Iscritto i: my_server.getListaDebitori()){
+                            pw.println(i.toString());
+                            pw.flush();
+                        }
+                        pw.println("END_DATA");
+                        pw.flush();
+                        end_cmd= sc.nextLine();
+                        if(!end_cmd.equals("END_CMD")){
+                            System.out.println("Format error");
+                        }
                         break;
                     case "CMD_QUIT":
                         System.out.println("Chiudo la connessione...");
