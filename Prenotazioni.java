@@ -12,6 +12,7 @@ public class Prenotazioni {
         //this.data = data;
         this.corso = corso;
         this.numPrenotati=0;
+        prenotati = new LinkedList<>();
     }
 
     public String getCorso() {
@@ -23,6 +24,7 @@ public class Prenotazioni {
     }
 
     public void addPrenotato(Iscritto i){
+        System.out.println(i+"dentro prenotazioni");
         prenotati.add(i);
         setNumPrenotati();
     }

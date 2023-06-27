@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.Socket;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Scanner;
 import java.util.HashMap;
 import java.util.Map;
@@ -113,7 +114,7 @@ public class ClientManager implements Runnable{
                         break;
                     case "MOSTRA_CALENDARIO":
                         nome_corso=sc.nextLine();
-                        for (Map.Entry<LocalDateTime,Prenotazioni> entry : my_server.getCalendario(nome_corso).entrySet()) {
+                        for (Map.Entry<String,Prenotazioni> entry : my_server.getCalendario(nome_corso).entrySet()) {
                             pw.println(entry.getKey() + ": \n\t" + entry.getValue());
                             pw.flush();
                         }
@@ -125,17 +126,34 @@ public class ClientManager implements Runnable{
                             System.out.println("Format error");
                         }
                         break;
-                    case "MOSTRA_DEBITORI":
+                    case "MOSTRA_DEBITORI_GUADAGNI":
                         for(Iscritto i: my_server.getListaDebitori()){
                             pw.println(i.toString());
                             pw.flush();
                         }
+                        pw.println("GUADAGNI");
+                        pw.flush();
+                        pw.println(my_server.calcolaGuadagni());
+                        pw.flush();
                         pw.println("END_DATA");
                         pw.flush();
                         end_cmd= sc.nextLine();
                         if(!end_cmd.equals("END_CMD")){
                             System.out.println("Format error");
                         }
+                        break;
+                    case "SET_PAGAMENTO":
+                        nome=sc.nextLine();
+                        cognome=sc.nextLine();
+                        c =sc.nextLine();
+                        var pagamento =sc.nextLine();
+                        end_cmd= sc.nextLine();
+                        if(!end_cmd.equals("END_CMD")){
+                            System.out.println("Format error");
+                        }
+                        System.out.println("Setto pagamento...");
+                        my_server.commandSetPagamento(nome,cognome,c,pagamento);
+
                         break;
                     case "CMD_QUIT":
                         System.out.println("Chiudo la connessione...");

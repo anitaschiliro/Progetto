@@ -38,7 +38,8 @@ public class Client {
                 System.out.println("6 - Aggiungi prenotazione");
                 System.out.println("7 - Mostra calendario prenotazioni");
                 System.out.println("8 - Mostra lista debitori");
-                System.out.println("9 - Esci");
+                System.out.println("9 - Setta pagamento");
+                System.out.println("10 - Esci");
                 System.out.println("-------------------------");
                 System.out.println("Inserisci la tua scelta: ");
 
@@ -143,9 +144,9 @@ public class Client {
                         cognome = input.nextLine();
                         System.out.println("Inserisci corso: ");
                         corso=input.nextLine();
-                        System.out.println("Inserisci data (AAAA-MM-DD): ");
+                        System.out.println("Inserisci data (DD-MM-AAAA): ");
                         var data = input.nextLine();
-                        System.out.println("Inserisci ora (OO:MM):");
+                        System.out.println("Inserisci ora (OO):");
                         var ora = input.nextLine();
                         pw.println("ADD_PRENOTAZIONE");
                         pw.flush();
@@ -163,11 +164,11 @@ public class Client {
                         pw.flush();
                         break;
                     case "7":
+                        pw.println("MOSTRA_CALENDARIO");
+                        pw.flush();
                         System.out.println("Inserisci corso: ");
                         corso= input.nextLine();
                         pw.println(corso);
-                        pw.flush();
-                        pw.println("MOSTRA_CALENDARIO");
                         pw.flush();
                         continue_list=true;
                         System.out.println("-----------------------");
@@ -188,7 +189,7 @@ public class Client {
                         pw.flush();
                         break;
                     case "8":
-                        pw.println("MOSTRA_DEBITORI");
+                        pw.println("MOSTRA_DEBITORI_GUADAGNI");
                         pw.flush();
                         continue_list=true;
                         System.out.println("-----------------------");
@@ -198,6 +199,12 @@ public class Client {
                             String line=sc.nextLine();
                             if(line.equals("END_DATA"))
                                 continue_list=false;
+                            if(line.equals("GUADAGNI")){
+                                System.out.println("*******************************");
+                                line=sc.nextLine();
+                                System.out.println("Guadagno complessivo: "+line);
+                                System.out.println("*******************************");
+                            }
                             else{
                                 System.out.println(line);
                                 System.out.println("------------------------");
@@ -209,6 +216,29 @@ public class Client {
                         pw.flush();
                         break;
                     case "9":
+                        System.out.print("Inserisci nome: ");
+                        nome = input.nextLine();
+                        System.out.print("Inserisci cognome: ");
+                        cognome = input.nextLine();
+                        System.out.println("Inserisci corso: ");
+                        corso=input.nextLine();
+                        System.out.println("Inserisci pagamento (scrivi 'Da pagare' o 'Pagato'): ");
+                        var pagamento=input.nextLine();
+
+                        pw.println("SET_PAGAMENTO");
+                        pw.flush();
+                        pw.println(nome);
+                        pw.flush();
+                        pw.println(cognome);
+                        pw.flush();
+                        pw.println(corso);
+                        pw.flush();
+                        pw.println(pagamento);
+                        pw.flush();
+                        pw.println("END_CMD");
+                        pw.flush();
+                        break;
+                    case "10":
                         pw.println("CMD_QUIT");
                         pw.flush();
                         System.out.println("Uscita..");
