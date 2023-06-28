@@ -138,17 +138,14 @@ public class Client {
                         pw.flush();
                         break;
                     case "6":
+                        pw.println("ADD_PRENOTAZIONE");
+                        pw.flush();
                         System.out.print("Inserisci nome: ");
                         nome = input.nextLine();
                         System.out.print("Inserisci cognome: ");
                         cognome = input.nextLine();
                         System.out.println("Inserisci corso: ");
                         corso=input.nextLine();
-                        System.out.println("Inserisci data (DD-MM-AAAA): ");
-                        var data = input.nextLine();
-                        System.out.println("Inserisci ora (OO):");
-                        var ora = input.nextLine();
-                        pw.println("ADD_PRENOTAZIONE");
                         pw.flush();
                         pw.println(nome);
                         pw.flush();
@@ -156,6 +153,25 @@ public class Client {
                         pw.flush();
                         pw.println(corso);
                         pw.flush();
+                        System.out.println("Scegli tra i seguenti slot temporali: ");
+                        continue_list=true;
+                        System.out.println("-----------------------");
+                        System.out.println("Slot disponibili");
+                        System.out.println("-----------------------");
+                        while(continue_list) {
+                            String line = sc.nextLine();
+                            if (line.equals("END_DATA"))
+                                continue_list = false;
+                            else {
+                                System.out.println(line);
+                                System.out.println("------------------------");
+                            }
+                        }
+                        System.out.println("Inserisci data (DD-MM-AAAA): ");
+                        var data = input.nextLine();
+                        System.out.println("Inserisci ora (OO):");
+                        var ora = input.nextLine();
+
                         pw.println(data);
                         pw.flush();
                         pw.println(ora);

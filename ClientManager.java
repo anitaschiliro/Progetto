@@ -102,7 +102,14 @@ public class ClientManager implements Runnable{
                     case "ADD_PRENOTAZIONE":
                         nome=sc.nextLine();
                         cognome=sc.nextLine();
-                        var c =sc.nextLine();
+                        nome_corso =sc.nextLine();
+                        for (Map.Entry<String,Prenotazioni> entry : my_server.getCalendarioPrenotabili(nome_corso).entrySet()) {
+                            pw.println(entry.getKey());
+                            pw.flush();
+                        }
+                        pw.println("END_DATA");
+                        pw.flush();
+
                         var data =sc.nextLine();
                         var ora= sc.nextLine();
                         end_cmd= sc.nextLine();
@@ -110,7 +117,7 @@ public class ClientManager implements Runnable{
                             System.out.println("Format error");
                         }
                         System.out.println("Aggiungo prenotazione...");
-                        my_server.commandAddPrenotazione(nome,cognome,c,data,ora);
+                        my_server.commandAddPrenotazione(nome,cognome,nome_corso,data,ora);
                         break;
                     case "MOSTRA_CALENDARIO":
                         nome_corso=sc.nextLine();
@@ -145,14 +152,14 @@ public class ClientManager implements Runnable{
                     case "SET_PAGAMENTO":
                         nome=sc.nextLine();
                         cognome=sc.nextLine();
-                        c =sc.nextLine();
+                        nome_corso =sc.nextLine();
                         var pagamento =sc.nextLine();
                         end_cmd= sc.nextLine();
                         if(!end_cmd.equals("END_CMD")){
                             System.out.println("Format error");
                         }
                         System.out.println("Setto pagamento...");
-                        my_server.commandSetPagamento(nome,cognome,c,pagamento);
+                        my_server.commandSetPagamento(nome,cognome,nome_corso,pagamento);
 
                         break;
                     case "CMD_QUIT":
@@ -166,6 +173,8 @@ public class ClientManager implements Runnable{
             }
             client.close();
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (postiNonDisponibiliException e) {
             throw new RuntimeException(e);
         }
     }

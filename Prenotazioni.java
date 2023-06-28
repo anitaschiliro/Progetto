@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.LinkedList;
 
-public class Prenotazioni {
+public class Prenotazioni implements Serializable {
     //private LocalDateTime data;
     private String corso;
     private LinkedList<Iscritto> prenotati;
@@ -37,6 +38,9 @@ public class Prenotazioni {
         this.numPrenotati+=1;
     }
 
+    public boolean isFull(){
+        return getNumPrenotati() > 2;
+    }
     @Override
     public String toString() {
         String output= "Prenotazioni{" +

@@ -7,30 +7,25 @@ public class Corso implements Serializable {
     private String istruttore;
     private float costo;
     private int numIscritti;
-    private LinkedList<Iscritto> ListaIscritti = new LinkedList<>();
-    private HashMap<String,Prenotazioni> calendario = new HashMap<>();
+    transient LinkedList<Iscritto> ListaIscritti;
+    transient HashMap<String,Prenotazioni> calendario;
 
     public Corso(String nome, String istruttore,float costo) {
         this.nome = nome;
         this.istruttore = istruttore;
         this.numIscritti=0;
         this.costo=costo;
+        inizializzaListaIscritti();
         inizializzaCalendario();
 
     }
 
-    public void inizializzaCalendario(){
-//        LocalDateTime today = LocalDateTime.now();
-//        LocalDateTime newDate= today.setHour();
-//
-//            while (today.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
-//                if (today.getHour() == 20) {
-//                    newDate = today.of(LocalDate.of(today.getYear(), today.getMonth(), today.getDayOfMonth()), LocalTime.of(8, 0));
-//                    calendario.put(newDate.plusDays(1), new Prenotazioni(this.nome));
-//                } else
-//                    calendario.put(newDate.plusHours(2), new Prenotazioni(this.nome));
-//            }
+    public void inizializzaListaIscritti(){
+        ListaIscritti=new LinkedList<>();
+    }
 
+    public void inizializzaCalendario(){
+        calendario=new HashMap<>();
         Calendar tmp= Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
         tmp.add(Calendar.DAY_OF_MONTH,1);
         tmp.set(Calendar.HOUR_OF_DAY,8);
@@ -43,6 +38,7 @@ public class Corso implements Serializable {
         int min=tmp.get(Calendar.MINUTE);
         int sec= tmp.get(Calendar.SECOND);
         System.out.println("Date: "+dayOfMonth+"-"+month+"-"+ year+" Hour: "+hour+":00:00");
+        calendario.put("Date: "+dayOfMonth+"-"+month+"-"+ year+" Hour: "+hour+":00:00",new Prenotazioni(this.nome));
         while(!(tmp.get(Calendar.DAY_OF_MONTH) == tmp.getActualMaximum(Calendar.DAY_OF_MONTH))){
             if(tmp.get(Calendar.HOUR_OF_DAY)==20){
                 tmp.add(Calendar.DAY_OF_MONTH,1);
@@ -91,12 +87,35 @@ public class Corso implements Serializable {
         return hash_copy;
     }
 
-    public void addPrenotazione(Iscritto i,String data){
-        System.out.println(data);
-        Prenotazioni p =calendario.get(data);
-        System.out.println(p+ " Add prenotazione in corso");
-        p.addPrenotato(i);
-        System.out.println("Numero prenotati: "+p.getNumPrenotati());
+    public HashMap<String,Prenotazioni> getCalendarioPrenotabili(){
+        var hash_copy = new HashMap<String,Prenotazioni>();
+        for (Map.Entry<String,Prenotazioni> entry : calendario.entrySet()){
+            var key=entry.getKey();
+            var value=entry.getValue();
+            if(!entry.getValue().isFull()){
+                hash_copy.put(key,value);
+            }
+        }
+        return hash_copy;
+    }
+    public void addPrenotazione(Iscritto i,String data) throws postiNonDisponibiliException {
+        try {
+            if (getCalendarioPrenotabili().containsKey(data)) {
+                Prenotazioni p = getCalendarioPrenotabili().get(data);
+                System.out.println(p.isFull());
+                if (!p.isFull()) {
+                    p.addPrenotato(i);
+                    calendario.put(data, p);
+                    System.out.println("Numero prenotati: " + p.getNumPrenotati());
+                } else {
+                    throw new postiNonDisponibiliException();
+                }
+            } else {
+                System.out.println("Chiave non presente\n");
+            }
+        }catch(postiNonDisponibiliException e){
+            System.out.println("Posti non disponibili");
+        }
     }
 
     public String getNome() {
@@ -137,10 +156,11 @@ public class Corso implements Serializable {
         StringBuilder output= new StringBuilder("Corso{" +
                 "nome='" + nome + '\'' +
                 ", istruttore='" + istruttore + '\'' +
-                "Iscritti{\n");
+                "Iscritti{\n\t");
 
         for(Iscritto i: ListaIscritti) {
             output.append(i.toString());
+            output.append("\n\t");
         }
         return output+"}";
     }
