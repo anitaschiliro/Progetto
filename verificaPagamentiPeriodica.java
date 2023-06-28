@@ -8,7 +8,7 @@ public class verificaPagamentiPeriodica implements Runnable{
     public void run() {
         while (true) {
             try {
-                Thread.sleep(60000);
+                Thread.sleep(1000);
                 s.listaDebitori.clear();
                 for(Corso c: s.getListaCorsi()){
                     if(c.getListaIscritti()!=null)

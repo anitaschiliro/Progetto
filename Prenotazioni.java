@@ -39,7 +39,9 @@ public class Prenotazioni implements Serializable {
     }
 
     public boolean isFull(){
-        return getNumPrenotati() > 2;
+        if(getNumPrenotati()>=2)
+            return true;
+        else return false;
     }
     @Override
     public String toString() {

@@ -92,7 +92,7 @@ public class Corso implements Serializable {
         for (Map.Entry<String,Prenotazioni> entry : calendario.entrySet()){
             var key=entry.getKey();
             var value=entry.getValue();
-            if(!entry.getValue().isFull()){
+            if(!value.isFull()){
                 hash_copy.put(key,value);
             }
         }
@@ -136,6 +136,16 @@ public class Corso implements Serializable {
 
     public int getNumIscritti() {
         return numIscritti;
+    }
+
+    public int getNumDebitori(){
+        int somma=0;
+        for(Iscritto i: getListaIscritti()){
+            if(!i.isPagamento()){
+                somma+=1;
+            }
+        }
+        return somma;
     }
 
     public void setNumIscritti() {
