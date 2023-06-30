@@ -5,7 +5,6 @@ public class Iscritto implements Serializable {
     private String surname;
     private int age;
     private String corso;
-
     private boolean pagamento;
 
     public Iscritto(String name, String surname, int age,String corso) {

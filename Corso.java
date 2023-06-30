@@ -1,5 +1,4 @@
 import java.io.Serializable;
-import java.time.*;
 import java.util.*;
 
 public class Corso implements Serializable {
@@ -98,8 +97,8 @@ public class Corso implements Serializable {
         }
         return hash_copy;
     }
-    public void addPrenotazione(Iscritto i,String data) throws postiNonDisponibiliException {
-        try {
+    public void addPrenotazione(Iscritto i,String data){
+            //System.out.println(getCalendarioPrenotabili());
             if (getCalendarioPrenotabili().containsKey(data)) {
                 Prenotazioni p = getCalendarioPrenotabili().get(data);
                 System.out.println(p.isFull());
@@ -108,14 +107,11 @@ public class Corso implements Serializable {
                     calendario.put(data, p);
                     System.out.println("Numero prenotati: " + p.getNumPrenotati());
                 } else {
-                    throw new postiNonDisponibiliException();
+                    System.out.println("Posti non disponibili");
                 }
             } else {
                 System.out.println("Chiave non presente\n");
             }
-        }catch(postiNonDisponibiliException e){
-            System.out.println("Posti non disponibili");
-        }
     }
 
     public String getNome() {

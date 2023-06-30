@@ -174,8 +174,6 @@ public class ClientManager implements Runnable{
             client.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } catch (postiNonDisponibiliException e) {
-            throw new RuntimeException(e);
         }
     }
 
