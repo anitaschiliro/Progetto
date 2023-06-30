@@ -1,0 +1,2 @@
+# Progetto programming techniques for distributed systems - Anita Schilirò
+Il progetto prevede la realizzazione di un'applicazione Client-Server multi-thread per la gestione dei corsi e degli iscritti di una palestra. In particolare vengono implementate le classi Corso,Iscritto e Prenotazioni, in modo da mantenere e memorizzare successivamente una Lista di Liste in cui ad ogni corso vengono associati i vari iscritti e permettere di prenotarsi per partecipare ad un corso, consultando gli slot temporali in cui sono ancora disponibili dei posti.
